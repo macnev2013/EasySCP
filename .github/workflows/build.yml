@@ -1,0 +1,171 @@
+name: Build EasySCP
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller easyscp.spec --clean
+    
+    - name: Create installer
+      run: |
+        # Create NSIS installer if NSIS is available
+        # This is optional - you can also just distribute the exe
+        Compress-Archive -Path dist\EasySCP.exe -DestinationPath dist\EasySCP-Windows.zip
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: EasySCP-Windows
+        path: |
+          dist/EasySCP.exe
+          dist/EasySCP-Windows.zip
+
+  build-macos:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller easyscp.spec --clean
+    
+    - name: Create DMG
+      run: |
+        # Create a DMG file
+        mkdir -p dist/dmg
+        cp -r dist/EasySCP.app dist/dmg/
+        ln -s /Applications dist/dmg/Applications
+        hdiutil create -volname "EasySCP" -srcfolder dist/dmg -ov -format UDZO dist/EasySCP-macOS.dmg
+        rm -rf dist/dmg
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: EasySCP-macOS
+        path: |
+          dist/EasySCP.app
+          dist/EasySCP-macOS.dmg
+
+  build-linux:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-tk python3-dev
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller easyscp.spec --clean
+    
+    - name: Create AppImage structure
+      run: |
+        # Create AppDir structure
+        mkdir -p dist/AppDir/usr/bin
+        mkdir -p dist/AppDir/usr/share/applications
+        mkdir -p dist/AppDir/usr/share/icons/hicolor/256x256/apps
+        
+        # Copy executable
+        cp dist/EasySCP dist/AppDir/usr/bin/
+        
+        # Create desktop entry
+        cat > dist/AppDir/EasySCP.desktop << EOF
+        [Desktop Entry]
+        Type=Application
+        Name=EasySCP
+        Comment=SSH Connection Manager
+        Exec=EasySCP
+        Icon=easyscp
+        Categories=Network;RemoteAccess;
+        Terminal=false
+        EOF
+        
+        cp dist/AppDir/EasySCP.desktop dist/AppDir/usr/share/applications/
+        
+        # Create AppRun
+        cat > dist/AppDir/AppRun << 'EOF'
+        #!/bin/bash
+        HERE="$(dirname "$(readlink -f "${0}")")"
+        exec "${HERE}/usr/bin/EasySCP" "$@"
+        EOF
+        
+        chmod +x dist/AppDir/AppRun
+        
+        # Create tar.gz
+        cd dist
+        tar -czf EasySCP-Linux.tar.gz AppDir/
+        cd ..
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: EasySCP-Linux
+        path: |
+          dist/EasySCP
+          dist/EasySCP-Linux.tar.gz
+
+  create-release:
+    needs: [build-windows, build-macos, build-linux]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v3
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          EasySCP-Windows/EasySCP-Windows.zip
+          EasySCP-macOS/EasySCP-macOS.dmg
+          EasySCP-Linux/EasySCP-Linux.tar.gz
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

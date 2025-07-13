@@ -1,0 +1,315 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# EasySSH specific files
+# Server configurations (contains sensitive data)
+servers.json
+server_key.key
+key.key
+
+# Database files
+easyssh.db
+*.db
+db_key.key
+*.db-journal
+*.db-wal
+
+# Application logs
+logs/
+*.log
+
+# Configuration file (may contain user preferences)
+config.json
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*~
+
+# Test files
+test_servers.json
+test_*.key
+
+# Build artifacts
+*.pyc
+*.pyo
+
+# OS generated files
+.Spotlight-V100
+.Trashes
+Desktop.ini
+
+# Editor backup files
+*.swp
+*.swo
+*~
+.*.swp
+
+# Python virtual environments
+venv/
+virtualenv/
+.virtualenv/
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# Distribution files
+dist/
+build/
+*.egg-info/
+
+# Package manager files
+pip-wheel-metadata/
+
+# Temporary directories
+tmp/
+temp/
+
+# Database files
+*.db
+*.sqlite
+
+# SSL certificates (if any)
+*.pem
+*.crt
+*.key
+
+# Backup files
+*.backup
+*.old
+
+# IDE project files
+*.sublime-project
+*.sublime-workspace
+.project
+.pydevproject
+
+# Local development files
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Session files
+*.session
+
+# Cache directories
+.cache/
+__pycache__/
+
+# Generated documentation
+docs/_build/
+docs/.doctrees/
+
+# Compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# Package files
+*.whl
+
+# Installer logs
+pip-log.txt
+
+# Unit test reports
+.tox/
+.coverage.*
+.pytest_cache/
+nosetests.xml
+junit.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+docs/_build
+
+# Backup files
+*.bak
+*.orig
+
+# Mac files
+.AppleDouble
+.LSOverride
+
+# Windows files
+$RECYCLE.BIN/
+*.lnk
+
+# Linux files
+*~
+
+# Vim files
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+
+# Emacs files
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*

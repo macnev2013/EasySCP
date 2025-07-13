@@ -1,0 +1,10 @@
+paramiko>=3.0.0
+customtkinter>=5.0.0
+Pillow>=9.0.0
+cryptography>=41.0.0
+sqlalchemy>=2.0.0
+sqlalchemy-utils>=0.41.0
+pyte>=0.8.1
+
+# Build tools
+pyinstaller>=6.0.0
