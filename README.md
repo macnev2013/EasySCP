@@ -35,6 +35,8 @@ cd easyscp
 
 2. Install dependencies:
 ```bash
+brew install python-tk
+brew install tcl-tk
 pip install -r requirements.txt
 ```
 

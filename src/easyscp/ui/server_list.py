@@ -55,7 +55,12 @@ class ServerListPanel:
         search_frame.pack(fill="x", padx=20, pady=(0, 10))
         
         self.search_var = ctk.StringVar()
-        self.search_var.trace("w", self._on_search_changed)
+        # Use trace_add for Python 3.13+ compatibility
+        try:
+            self.search_var.trace_add("write", lambda *args: self._on_search_changed())
+        except AttributeError:
+            # Fallback for older Python versions
+            self.search_var.trace("w", self._on_search_changed)
         self.search_entry = ctk.CTkEntry(
             search_frame,
             placeholder_text="🔍 Search servers...",
